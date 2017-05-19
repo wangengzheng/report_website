@@ -1,0 +1,11 @@
+﻿@{
+    Layout = null;
+}
+@model Dictionary<int,string>
+
+<select name="报表类别" class="easyui-combobox" data-options="editable:false"  id="categoryId">
+@foreach (var item in Model)
+{
+    <option value="@item.Key">@item.Value</option>
+}
+</select>

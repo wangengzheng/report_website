@@ -1,0 +1,25 @@
+C:\项目目录\Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.dll
+C:\项目目录\Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.pdb
+C:\项目目录\Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.dll
+C:\项目目录\Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.pdb
+C:\项目目录\Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.csprojResolveAssemblyReference.cache
+C:\1_项目目录\4_Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.dll
+C:\1_项目目录\4_Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.pdb
+C:\1_项目目录\4_Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.dll
+C:\1_项目目录\4_Temp\EDS报表  运用EF\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.pdb
+C:\1_项目目录\4_Temp\NewReport\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.dll
+C:\1_项目目录\4_Temp\NewReport\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.pdb
+C:\1_项目目录\4_Temp\NewReport\AVGD.Rpt\AVGD.Common\bin\Newtonsoft.Json.dll
+C:\1_项目目录\4_Temp\NewReport\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.dll
+C:\1_项目目录\4_Temp\NewReport\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.pdb
+C:\1_项目目录\4_Temp\NewReport\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.csprojResolveAssemblyReference.cache
+C:\1_项目目录\EDS AVGD.Rpt\AVGD.Common\bin\AVGD.Common.dll
+C:\1_项目目录\EDS AVGD.Rpt\AVGD.Common\bin\AVGD.Common.pdb
+C:\1_项目目录\EDS AVGD.Rpt\AVGD.Common\bin\Newtonsoft.Json.dll
+C:\1_项目目录\EDS AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.csprojResolveAssemblyReference.cache
+C:\1_项目目录\EDS AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.dll
+C:\1_项目目录\EDS AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.pdb
+C:\Users\Administrator\Desktop\a\AVGD.Rpt\report_website\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.dll
+C:\Users\Administrator\Desktop\a\AVGD.Rpt\report_website\AVGD.Rpt\AVGD.Common\bin\AVGD.Common.pdb
+C:\Users\Administrator\Desktop\a\AVGD.Rpt\report_website\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.dll
+C:\Users\Administrator\Desktop\a\AVGD.Rpt\report_website\AVGD.Rpt\AVGD.Common\obj\Debug\AVGD.Common.pdb

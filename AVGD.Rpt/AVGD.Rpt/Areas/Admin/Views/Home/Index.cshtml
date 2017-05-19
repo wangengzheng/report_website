@@ -1,0 +1,281 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutView.cshtml";
+}
+<div>
+ <a class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:'true'" onclick="javascript:window.location.href='/Report/Index'" style="float:left;">返回</a>
+<h1 class="page-title"  style="text-align:center">@ViewBag.Title</h1>
+</div>
+@if (!string.IsNullOrWhiteSpace(ViewBag.报表名称))
+{
+    <table  id="admindatagirdview" class="easyui-datagrid" title="@ViewBag.Title (多条件查询)结构" style="width:auto;height:auto" data-options="collapsible:false,method:'get',autoRowHeight:'false',fitColumns:'true',rownumbers:'true',url:'/Admin/Home/getonerowjson?report=@ViewBag.report',toolbar:'#ft'">
+        <thead>
+            <tr>
+                <th data-options="field:'Detailedname'">
+                    报表名称
+                </th>
+                <th data-options="field:'Sqlvalue',width:60">
+                    报表sql语句
+                </th>
+                <th data-options="field:'Total'">
+                    统计字段
+                </th>
+                <th data-options="field:'Sort'">
+                    排序字段
+                </th>
+                <th data-options="field:'Order'">
+                    排序方式
+                </th>
+            </tr>
+        </thead>
+    </table>
+        
+    <div id="ft" style="padding: 2px 5px;">
+        <a href="#" class="easyui-linkbutton" iconcls="icon-edit" plain="true" id="manyconditionedit">编辑</a>
+    </div>
+    
+    <div id="adminwin" class="easyui-window" title="多条件编辑" style="width: auto; height: auto"
+        data-options="iconCls:'icon-save',modal:true,closed:true">
+        <div style="padding: 10px 60px 20px 60px">
+            <form action="updateMessage" method="post" id="adminwinff">
+            <table cellpadding="8">
+                <tr>
+                    <td>
+                        报表类型:
+                    </td>
+                    <td>
+                        <input class="easyui-textbox" type="text" name="报表类型" data-options="disabled:true" value="@ViewBag.报表类型"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        报表名称:
+                    </td>
+                    <td>
+                        <input class="easyui-textbox" type="text" name="报表名称" data-options="disabled:true" value="@ViewBag.报表名称"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        报表sql语句:
+                    </td>
+                    <td>
+                    <textarea name="报表sql语句" style="width:400px;height:200px;white-space: pre-wrap;">
+                      @ViewBag.报表sql语句
+                      </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        统计字段:
+                    </td>
+                    <td> 
+                        <input class="easyui-textbox" type="text" name="统计字段"  value="@ViewBag.统计字段"/>&nbsp;<b style="padding-left: 14px;color: red;">以逗号分隔,字段必须是数字类型</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        排序字段:
+                    </td>
+                    <td>
+                   @* @Html.Action("getDropDownListFromSql", new { sqlvalue = ViewBag.报表sql语句, name = "排序字段", value = ViewBag.排序字段 })*@
+                             <input class="easyui-textbox" type="text" name="排序字段"  value="@ViewBag.排序字段"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        排序方式:
+                    </td>
+                    <td>
+                        <select id="@ViewBag.排序方式" name="排序方式"  class="easyui-combobox" data-options="panelHeight:'auto',editable:false">
+                            @if (ViewBag.排序方式 == "desc")
+                            {
+                                <option name="desc" selected="selected">desc</option>
+                                <option name="asc">asc</option>
+                            }
+                            else
+                            { 
+                                <option name="desc">desc</option>
+                                <option name="asc" selected="selected">asc</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" name="report" value="@ViewBag.report" />
+                        @Html.AntiForgeryToken()
+                    </td>
+                </tr>
+            </table>
+            <div style="text-align: center; padding: 5px">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="submitForm('admindatagirdview','adminwin','adminwinff')">
+                    更新</a>&nbsp;&nbsp; <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-back"
+                        onclick="breakout('adminwin')">退出</a>
+            </div>
+            </form>
+        </div>
+    </div>
+    
+}
+<hr />
+@if (!string.IsNullOrWhiteSpace(ViewBag.报表名称))
+{
+    
+    <table  id="admindatagirdview1" class="easyui-datagrid" title="@ViewBag.Title (设置查询)结构" style="width:auto;height:auto" data-options="singleSelect:true,collapsible:false,method:'get',autoRowHeight:'false',fitColumns:'true',rownumbers:'true',url:'/Admin/Home/GetReportColumn?report=@ViewBag.report',toolbar:'#ft1',idField:'Id'">
+        <thead>
+            <tr>
+                <td data-options="field:'Id'">主键</td>
+                <td data-options="field:'Columnreport'">主键</td>
+                <th data-options="field:'Columnname'">
+                    报表列名
+                </th>
+                <th data-options="field:'Columnvalue',width:100">
+                    列名的值
+                </th>
+            </tr>
+        </thead>
+    </table>
+        
+    <div id="ft1" style="padding: 2px 5px;">
+        <a href="#"  class="easyui-linkbutton" iconcls="icon-edit" plain="true"  id="setupedit">编辑</a>
+        &nbsp;&nbsp;
+         <a href="#"  class="easyui-linkbutton" iconcls="icon-add" plain="true"  id="setupadd">新增</a>
+         &nbsp;&nbsp;
+         <a href="#"  class="easyui-linkbutton" iconcls="icon-remove" plain="true"  id="setupremove">删除</a>
+    </div>
+    
+      <div id="setupeditwin" class="easyui-window" title="设置查询结构窗口" style="width: auto; height: auto"
+        data-options="iconCls:'icon-save',modal:true,closed:true">
+        <div style="padding: 10px 60px 20px 60px">
+            <form action="" method="post" id="setupeditwinff" >
+            <table cellpadding="8">
+                   <input  type="hidden" name="Id"  value=""/>
+                   <input type="hidden" name="report" value="@ViewBag.report" />
+                <tr>
+                    <td>
+                        报表名称:
+                    </td>
+                    <td>
+                        <input class="easyui-textbox" type="text"  name="报表名称" data-options="disabled:true" value="@ViewBag.Title"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       报表列名:
+                    </td>
+                    <td>
+                        @* @Html.Action("getDropDownListFromSql", new { sqlvalue = ViewBag.报表sql语句, name = "报表列名", value =string.Empty })*@
+                             <input class="easyui-textbox" type="text"  name="报表列名"  value=""  id="reportcolumnname"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        列名的值:
+                    </td>
+                    <td>
+                          <input class="easyui-textbox" data-options="multiline:true" type="text"  name="列名的值" value="" style="width:400px;height:140px" id="reportcolumnvalue" />
+                          @Html.AntiForgeryToken()
+                    </td>
+                </tr>
+            </table>
+            <div style="text-align: center; padding: 5px">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="submitForm('admindatagirdview1','setupeditwin','setupeditwinff')">
+                    确定</a>&nbsp;&nbsp; <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-back"
+                        onclick="breakout('setupeditwin')">退出</a>
+            </div>
+            </form>
+        </div>
+    </div>
+    
+}
+<script type="text/javascript">
+    $(function () {
+        $("#manyconditionedit").bind('click', function () {
+            $("#adminwin").window('open');
+        });
+
+        //编辑(设置)
+        $("#setupedit").bind('click', function () {
+            setEnable();
+            $("form[id='setupeditwinff']").attr("action", "setupeditwinupdate");
+            var rowedit = $("#admindatagirdview1").datagrid('getSelected');
+            if (rowedit) {
+                $("#setupeditwin").window('open');
+                $("#setupeditwinff").form('load', {
+                    'Id': rowedit.Id,
+                    'report': rowedit.Columnreport,
+                    '报表列名': rowedit.Columnname,
+                    '列名的值': rowedit.Columnvalue
+                });
+            } else {
+                $.messager.alert('提示', '请至少选中一行数据!');
+            }
+        });
+
+        //新增(设置)
+        $("#setupadd").bind('click', function () {
+            setvalue(); setEnable();
+            $("form[id='setupeditwinff']").attr("action", "setupeditwinadd");
+            $("#setupeditwin").window('open');
+        });
+        //删除(设置)
+        $("#setupremove").bind('click', function () {
+            setDisable();
+            $("#setupeditwinff").attr("action", "setupeditwindelete");
+            var rowremove = $("#admindatagirdview1").datagrid('getSelected');
+            if (rowremove) {
+                $("#setupeditwin").window('open');
+                $("#setupeditwinff").form('load', {
+                    'Id': rowremove.Id,
+                    'report': rowremove.Columnreport,
+                    '报表列名': rowremove.Columnname,
+                    '列名的值': rowremove.Columnvalue
+                });
+                $("#admindatagirdview1").datagrid('clearSelections');
+            } else {
+                $.messager.alert('提示', '请至少选中一行数据!');
+            }
+        });
+
+    });
+    //退出
+    function breakout(name) {
+        $("#" + name).window('close');
+    }
+    //提交
+    function submitForm(datagirdviewid,windowid,formid) {
+        $.ajax({
+            type: "POST",
+            url: '/Admin/Home/' + $("#" + formid).attr("action"),
+            data: $("#"+formid).serialize(),
+            cache: false,
+            success: function (data) {
+                if (data == "ok") {
+                    $("#" + windowid).window('close');
+                    $("#"+datagirdviewid).datagrid('reload');
+                } else if (data == "错误!") {
+                    $.messager.alert('温馨提示', '出错了请联系管理员', 'warning');
+                }
+            },
+            error: function (data) {
+                alert('出错了请联系管理员!');
+            }
+        });
+    }//end of 提交
+
+    function setvalue() {
+        $("#reportcolumnname").textbox('setValue', '');
+        
+        $("#reportcolumnvalue").textbox('setValue', '');
+    }
+    function setDisable() {
+        $("#reportcolumnname").textbox('readonly', true);
+        $("#reportcolumnvalue").textbox('readonly', true);
+    }
+    function setEnable() {
+        $("#reportcolumnname").textbox('readonly', false);
+        $("#reportcolumnvalue").textbox('readonly', false);
+    }
+
+</script>
+

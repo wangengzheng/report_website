@@ -1,0 +1,79 @@
+﻿@{
+    Layout = null; 
+}
+<div style="text-align: left;">
+    <form action="edsquery" method="post" id="queryfromid" class="form-inline" style="padding-left: 1%; padding-top: 9px;">
+        <table>
+            <tr>
+                <td style="width: 70px;">
+                    <span>订单编号:</span>
+                </td>
+                <td style="width: 200px;">
+                    <input class="easyui-textbox" name="订单号" value="" />
+                </td>
+                <td style="width: 70px;">
+                    <span>下单日期:</span>
+                </td>
+                <td style="width: 200px;">
+                    <input class="easyui-datebox" name="下单日期1" value="" />
+                </td>
+                <td style="width: 70px;">
+                    <span>至:</span>
+                </td>
+                <td style="width: 200px;">
+                    <input class="easyui-datebox" name="下单日期2" value="" />@*validtype="dateValid['#datetime1']" *@
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 70px;">
+                    <span>商家品牌:</span>
+                </td>
+                <td style="width: 200px;">
+                    <input class="easyui-textbox" name="商家品牌" value="" />
+                </td>
+                <td style="width: 70px;">
+                    <span>商家工厂名:</span>
+                </td>
+                <td  style="width: 200px;">
+                    <input class="easyui-textbox" name="商家工厂名" value="" />
+                </td>
+                                <td style="width: 70px;">
+                    <span>商品编码:</span>
+                </td>
+                <td style="width: 200px;">
+                    <input class="easyui-textbox" name="商品编码" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 70px;">订单状态: </td>
+                <td colspan="5">
+                    <label style="padding-right: 22px;">
+                        <input name="订单状态" type="checkbox" value="全部状态" id="allStatus" />全部状态
+                    </label>
+                    <label style="padding-right: 22px;">
+                        <input name="订单状态" type="checkbox" value="等待买家付款" />等待买家付款
+                    </label>
+                    <label style="padding-right: 22px;">
+                        <input name="订单状态" type="checkbox" value="买家已付款" />买家已付款
+                    </label>
+                    <label style="padding-right: 22px;">
+                        <input name="订单状态" type="checkbox" value="卖家已确认" />卖家已确认
+                    </label>
+                    <label style="padding-right: 22px;">
+                        <input name="订单状态" type="checkbox" value="卖家已发货" />卖家已发货
+                    </label>
+                    <label style="padding-right: 22px;">
+                        <input name="订单状态" type="checkbox" value="交易成功" />交易成功
+                    </label>
+                    <label style="padding-right: 22px;">
+                        <input name="订单状态" type="checkbox" value="交易取消" />交易取消</label>
+                    <input type="hidden" name="report"  value="@ViewBag.report"/>
+                    @Html.AntiForgeryToken()
+                </td>
+            </tr>
+        </table>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="submitsquery('queryfromid')" style="padding: 18px; top: 70px; position: absolute; left: 860px;">查询</a>
+        <a id="openwindow" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="padding: 18px; top: 70px; position: absolute; left: 963px;">高级</a>
+        <a id="" href="#" class="easyui-linkbutton" data-options="plain:'true'" style="top: 133px; position: absolute; left: 922px; padding-left: 15px; padding-right: 15px;" onclick="clearform('queryfromid')">清空</a>
+    </form>
+</div>

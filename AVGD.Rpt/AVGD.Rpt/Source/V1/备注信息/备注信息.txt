@@ -1,0 +1,42 @@
+﻿var path = AppDomain.CurrentDomain.BaseDirectory + "SysLog\\Cache_rpt_categorydetails.log";       
+
+ rpt_categorydetail  缓存 rpt_categorydetail表的数据 的 文件  当更改  上面的文件的时候 缓存就会清除掉s
+ （缓存依赖以文件）
+
+
+
+ var path = AppDomain.CurrentDomain.BaseDirectory + "SysLog\\Cache_rpt_column.log";
+ 同上
+
+
+ 统计的字段   统计出订单数量的话 要字段的列名 要包含·  订单号 · 三 个字
+  public string GetOrderCountSqlValue(string sqlValue)
+        {
+            if (sqlValue.Contains("订单号"))
+            {
+                return string.Format("select COUNT(DISTINCT `订单号`) from ( {0} ) a", sqlValue);             
+            }
+            else
+            {
+                return sqlValue;
+            }
+        }
+		//当然看需求改
+
+ 设置 功能 
+
+ 需要在 rpt_columnname 表中设置
+
+ 列名  以及  列名对应的 sql  不需要再最后加上 ，
+       
+ 例如     列名                    sql
+ 
+           订单号                a.OrderID AS '订单号'
+
+
+		   最后一个就是 
+		   startfrom           from   之后的 sql  不包含 from
+
+
+
+

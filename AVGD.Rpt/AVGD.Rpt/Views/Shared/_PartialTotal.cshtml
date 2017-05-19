@@ -1,0 +1,50 @@
+﻿@using System.Data
+@{
+    Layout = null;
+    DataSet ds=null;
+    if(Model!=null)
+    {
+         ds = (DataSet)Model;
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    @if(ds!=null&&ds.Tables.Count==2)
+    {
+           <table class="gridtable">
+            <thead>
+            <tr><th>订单数量</th>
+            @foreach (var name in ViewBag.columnname)
+            {
+                <th>@name</th>
+            }           
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td><span id="" style="color:#FF4F49;">@ds.Tables[0].Rows[0][0].ToString()</span></td>
+           @{
+                  DataTable T = ds.Tables[1];
+                  foreach (DataRow item in T.Rows)
+                  {
+                      foreach (var name in ViewBag.columnname)
+                      {
+                            <td><span id="" style="color:#FF4F49;">@item[name]</span></td>             
+                      }
+                  }
+               }
+
+            </tr>
+            </tbody>
+            </table>
+    
+    }else{
+     <span style="text-align:center;padding-top:20px;">查询时间过长 或者数据为空</span>
+    }
+</body>
+</html>

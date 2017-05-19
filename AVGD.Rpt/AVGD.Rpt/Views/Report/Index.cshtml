@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>报表统计中心</title>
+    <link rel="shortcut icon" href="~/Source/V1/images/favicon.png" /> 
+    <link href="~/Source/V1/css/R_Index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div>
+            <h1>报表统计中心</h1>
+            <div class="contain">
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>订单信息报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="EDS商城订单" onclick="javascript: window.location.href = '/Report/Category?report=f78b6fbb3e658f4b43c7b346ccde7ffb&title=EDS商城订单'">  
+                    <input type="button" value="易掌管订单" onclick="javascript: window.location.href = '/Report/Category?report=0c5514ece70c4ed00ed55f330beaacda&title=易掌管订单'">
+                    <input type="button" value="店小二订单" onclick="javascript: window.location.href = '/Report/Category?report=1391a11cb0600ffae861019e28989bb3&title=店小二订单'">
+                    <input type="button" value="E淘订单" onclick="javascript: window.location.href = '/Report/Category?report=895d194aa7c42d65df007bbf4ef395ba&title=E淘订单'" style="margin-top:-35px;margin-bottom:20px;">
+                </div>
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>商品信息报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="商品信息报表" onclick="javascript: window.location.href = '/Report/Category?report=d90f78bbb57366adfbd51bd7071920d7&title=商品信息报表'">
+                    <input type="button" value="品牌信息报表"  onclick="javascript: window.location.href = '/Report/Category?report=ac3c2fecaafa7d98c493f7680795214c&title=品牌信息报表'">
+                    <input type="button" value="商品类型、材质、风格统计报表" style="width: 300px;text-indent: 50px;" onclick="javascript: window.location.href = '/Report/Category?report=1274220b683b5fadc899e3aa9057822c&title=商品类型、材质、风格统计报表'">
+                </div>
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>供货商信息报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="供货商信息报表" onclick="javascript: window.location.href = '/Report/Category?report=2b063a6635fc708e0057b59f27456cdb&title=供货商信息报表'">
+                    <input type="button" value="E淘认证报表" onclick="javascript: window.location.href = '/Report/Category?report=62f0116dc628f111ab9ddd6637ee38df&title=E淘认证报表'">
+                </div>
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>服务运营商信息报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="服务运营商报表" onclick="javascript: window.location.href = '/Report/Category?report=74e2ae57e7fffb7e3bd998dde424f0df&title=服务运营商报表'">
+                </div>
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>财务部报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="易掌管财务部统计报表" style="width:280px;" onclick="javascript: window.location.href = '/Report/Category?report=9cdf80752eaf6522058cf0389ca9b3ed&title=财务部统计报表'">
+                    <input type="button" value="E淘财务部统计报表" style="width:250px;" onclick="javascript: window.location.href = '/Report/Category?report=c7ad753b47671228bc28f1e75397bf9d&title=E淘财务部统计报表'">
+                </div>
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>销售部报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="客服部统计报表">
+                </div>
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>市场部报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="市场部统计报表">
+                </div>
+                <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>运营管理信息报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="服务运营商订单统计表" style="width: 250px;text-indent: 50px;"> 
+                    <input type="button" value="品牌统计表">
+                </div>
+                 <div class="contain_nav">
+                    <img src="~/Source/V1/images/circle.png" />
+                    <p>账号信息的报表</p>
+                </div>
+                <div class="contain_button">
+                    <input type="button" value="EDS商城账号信息报表" onclick="javascript: window.location.href = '/Report/Category?report=a087aecd9b44a1c13e0102bb008641ed&title=EDS商城账号信息报表'" style="width: 250px;text-indent: 50px;">                      
+                    <input type="button" value="店小二账号信息报表" onclick="javascript: window.location.href = '/Report/Category?report=f2849b823726fbae4863595d60e6f3ee&title=店小二账号信息报表'" style="width: 250px;text-indent: 50px;">
+                </div>
+            </div>
+    </div>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?fe80d98655360d4d28f9b092978af6d3";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+</script>
+</body>
+</html>

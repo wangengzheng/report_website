@@ -1,0 +1,307 @@
+﻿@{
+    Layout = null;
+    Response.ContentEncoding = System.Text.Encoding.UTF8;
+    
+    //TODO : 顶部部分视图 名字
+    string partialViewName = "EDS商城订单,店小二订单,易掌管订单,财务部统计报表,E淘订单,E淘财务部统计报表";
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta  charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <title>@(ViewBag.Title)报表</title>        
+    <link rel="shortcut icon" href="~/Source/V1/images/favicon.png" /> 
+    <link href="~/Source/V1/themes/default/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Source/V1/css/Site.css" rel="stylesheet" />
+    <link href="~/Source/V1/themes/icon.css" rel="stylesheet" type="text/css" />
+    <script src="~/Source/V1/scripts/jquery-1.11.3.min.js"></script>   
+    <script src="~/Source/V1/scripts/jquery.easyui-1.4.3.min.js"></script>
+    <script src="~/Source/V1/scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Source/V1/scripts/R_categoty.js"></script>
+    <style type="text/css">
+        .drag-item{list-style-type:none;display:block;padding:5px;border:1px solid #ccc;margin:2px;width:200px;background:#fafafa;color:#444;}.indicator{position:absolute;font-size:9px;width:10px;height:10px;display:none;color:red;}table.gridtable{font-family:verdana,arial,sans-serif;font-size:11px;color:#333333;border-width:1px;border-color:#666666;border-collapse:collapse;margin:10px 2px 2px 10px;}table.gridtable th{border-width:1px;padding:14px;border-style:solid;border-color:#666666;background-color:#D7EAF7;width:180px;text-align:center;}table.gridtable td{border-width:1px;padding:14px;border-style:solid;border-color:#666666;background-color:#ffffff;width:160px;text-align:center;}.well.search-well{text-align:center;}.well.search-well form{margin-bottom:0px;}.well.search-well label{margin-bottom:0px;vertical-align:middle;}
+    </style>
+</head>
+<body style="overflow: scroll;margin:0px 10px 5px 10px">
+    <div>
+        <div>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:'true'" onclick="javascript:window.location.href='/Report/Index'"
+                style="float: left;">返回列表</a>
+            <h2 style="text-align: center; padding-top: 0px;">@(ViewBag.Title)报表</h2>
+        </div>
+        @if (partialViewName.Contains(ViewBag.Title))
+        {
+            <div class="easyui-panel" title="" style="width: auto; height: 100px; background: #fafafa;" >
+                <div>
+                    @Html.Action("partailveiw", new { title = ViewBag.Title, report = ViewBag.report })
+                </div>
+            </div>
+        }
+        <div id="toolbar" style="float: right">
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:'true'" id="helpButton"
+                >帮助</a> &nbsp; &nbsp;
+            @if (!partialViewName.Contains(ViewBag.Title))
+            {
+                <a id="openwindow" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-filter',plain:'true'">
+                    多条件查询</a><text> &nbsp; &nbsp;</text> 
+            }
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:'true'"
+                onclick="save()">导出</a> &nbsp;&nbsp; <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-setup',plain:'true'"
+                    onclick="setup()">设置</a>
+        </div>
+        <div style="padding-top: 15px;">
+            <p>
+                <span></span>
+            </p>
+        </div>
+        <table  id="datagirdview" class="easyui-datagrid" title="数据显示" style="width:auto;height:660px;" data-options="singleSelect:true,method:'post',fitColumns:'true',pageNumber:1,pageSize:20,pageList:[10,20,30,40,50],rownumbers:'true',pagination:'true',autoRowHeight:'false',sortName:'@ViewBag.排序字段',sortOrder:'@ViewBag.排序方式',remoteSort:'true'">
+            <thead>
+                <tr>
+                    @if (ViewBag.ColumnName != null)
+                    {
+                        string[] columns = (string[])(ViewBag.ColumnName);
+                        foreach (string column in columns)
+                        {
+                        <th data-options="field:'@column',width:80" sortable="true" sortname="@column">@column
+                        </th>        
+                        }
+                    }
+                </tr>
+            </thead>
+        </table>
+        <div id="window" class="easyui-window" title="高级查询" style="width: auto; height: auto;
+            padding: 10px 40px 10px 60px; overflow-y: scroll;" data-options="iconCls:'icon-filter',modal:true,collapsible:false,minimizable:false,maximizable:false,closed:true,top: 0">
+            <form action="AdvancedQuery" method="post" id="ff">
+            @if (ViewBag.ColumnName != null && !((string[])ViewBag.ColumnType).ToList().All(word => (ViewBag.不显示的类型).Contains(word)))
+            {
+                string[] columns = (string[])(ViewBag.ColumnName);
+                int i = 0;
+                foreach (string type in (string[])(ViewBag.ColumnType))
+                {
+                    switch (type)
+                    {
+                        case "System.Int32":
+                        case "System.Int64":
+                        case "System.UInt64":
+                        case "System.Int16":
+                        case "System.Int":
+                        case "System.Single":
+                        case "System.SByte":
+                        case "System.Decima":
+                        case "System.Double":
+                <div class="box_3">
+                    <label for="@columns[i]" class="item">@columns[i]:</label>
+                    <div class="ipt_box">
+                        @Html.Action("Operatorpartialview", new { selectname = columns[i] })<input class="easyui-numberbox new_text" id="@columns[i]" name="@columns[i]"  />
+                    </div>
+                </div>
+                                                                                                 break;
+
+                        case "System.String":
+                <div class="box_3">
+                    <label for="@columns[i]" class="item">@columns[i]:</label>
+                    <div class="ipt_box">
+                        <input class="easyui-textbox new_text" id="@columns[i]" name="@columns[i]"/>
+                    </div>
+                </div>
+                                                                                 break;
+                        case "System.DateTime":
+                <div class="box_3">
+                    <label for="@columns[i]" class="item">@columns[i]:</label>
+                    <div class="ipt_box">
+                        <input class="easyui-datebox"  style="width:200px"  id="@columns[i]" name="@columns[i]"/>
+                    </div>
+                </div>
+                <div class="box_3">
+                    <label for="@columns[i]@columns[i]" class="item">
+                        至:</label>
+                    <div class="ipt_box">
+                        <input class="easyui-datebox"  style="width:200px"  id="@columns[i]@columns[i]" name="@columns[i]@columns[i]" />
+                        @*validtype="dateValid['#@columns[i]']" *@
+                    </div>
+                </div>
+                                                                                                                    break;
+                        case "System.TimeSpan":
+                        case "System.Byte[]":
+                <input class="easyui-numberbox" id="@columns[i]" name="@columns[i]" type="hidden" />
+                                                                  break;
+                        default:
+                <div class="box_3">
+                    <label for="@columns[i]" class="item">@columns[i]:</label>
+                    <div class="ipt_box">
+                        <input class="easyui-textbox new_text" id="@columns[i]" name="@columns[i]"/>
+                    </div>
+                </div>
+                                                                                 break;
+
+                    }
+                    i++;
+                }
+                <div class="box_3">
+                    <label class="item">
+                    </label>
+                </div>
+                <div class="box_3">
+                    <label class="item">
+                    </label>
+                    <div>
+                        <a href="#" class="easyui-linkbutton" onclick="submitForm('ff')" data-options="iconCls:'icon-search'">
+                            查询</a>&nbsp;&nbsp; <a href="#" class="easyui-linkbutton" id="formrest" data-options="iconCls:'icon-remove'">
+                                清空</a>&nbsp;&nbsp; <a href="#" class="easyui-linkbutton" id="quite" data-options="iconCls:'icon-back'">
+                                    返回</a>
+                    </div>
+                </div>
+ 
+            }
+            <input name="report" type="hidden" id="report" value="@ViewBag.report" />
+            <input name="ziduan" id="ziduan" type="hidden" value="@ViewBag.zdString" />
+            <input name="leixing" type="hidden" value="@ViewBag.lxString" />
+            <input name="title"  type="hidden" id="title" value="@ViewBag.Title" />
+            <input name="token" id="token" type="hidden" value="@ViewBag.token" />
+            <input name="key" id="idkey" type="hidden"  value="@ViewBag.排序字段"/>
+            <input name="subtotalcolumnname" id="subtotalcolumnname" type="hidden"  value="@ViewBag.Total"/>
+            <input name="tabthistablerows" id="tabthistablerows" type="hidden" />
+             @Html.AntiForgeryToken()
+            </form>
+        </div>
+        @if (ViewBag.ColumnName != null)
+        {
+            string[] columns = (string[])(ViewBag.ColumnName);
+            int length = columns.Length;
+            <div id="setupwindow" class="easyui-window" title="设置窗口" style="width: auto; height: auto;
+                padding: 10px 10px 10px 10px; font-size: 16px;" data-options="iconCls:'icon-setup',modal:true,collapsible:false,minimizable:false,maximizable:false,closed:true,top:0">
+                <div style="width: 420px;">
+                    <div class="left">
+                        <table> 
+                            @foreach (string type in columns)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="item1">
+                                            <input name="@(type)" type="hidden"  value="@type"/>@type
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <form action="setupPost" method="post" id="setupff">
+                    <div class="right">
+                        <table>
+                            <tr>
+                                <td class="blank">
+                                    顺序
+                                </td>
+                                <td class="title">
+                                    字段名
+                                </td>
+                            </tr>
+                            @for (int k = 0; k < length; k++)
+                            {
+                                <tr>
+                                    <td class="time">@(k + 1)
+                                    </td>
+                                    <td class="drop">
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="startfrom" value="startfrom" />
+                                    <input type="hidden" name="setupreport" value="@ViewBag.report" />
+                                    <input type="hidden" name="setuptotalname" value="@ViewBag.Total" />
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="width: 350px; padding-top: 20px; margin: 10px; text-align: center;" class="right">
+                        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="submitsetupForm('setupff')">
+                            提交</a> &nbsp;&nbsp; <a href="#" id="setupquite" class="easyui-linkbutton" data-options="iconCls:'icon-back'">
+                                返回</a> &nbsp;&nbsp;
+                        @if (this.Context.Request.QueryString["CustomQuery"] != null)
+                        {
+                            <a href="#" id="resetsetup" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">
+                                重新设置</a>
+                        }
+                    </div>
+                    </form>
+                </div>
+            </div>
+        }
+        <p>
+        </p>
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Total))
+        {
+            <div id="报表tabs" class="easyui-tabs" data-options="tools:'#tab-tools'" style="width: 100%; height: 150px;">
+                <div title="本页小计" data-options="tabWidth:130,cache:'false',loadingMessage:'正在加载中....请稍等...',method:'post'">
+                </div>
+                <div title="本表合计" data-options="tabWidth:130,loadingMessage:'正在加载中....请稍等...',method:'post',cache:'false'">                   
+                </div>
+            </div>
+             <div id="tab-tools">
+               <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-reload'" onclick="handRefresh()">点击刷新</a>
+               <select id="tab-tools-select" class="easyui-combobox" name="isLoading" data-options="editable:false,panelWidth:150,panelHeight: 'auto',onSelect: function(rec){if(rec.value==1){$('#报表tabs').tabs('unselect', 0).tabs('select',0);}}">  
+                   <option value="1" selected="selected">自动刷新</option>  
+                   <option value="0">不自动刷新</option>  
+              </select>  
+            </div>
+        }
+ 
+        <script type="text/javascript">
+            $(function () {
+
+                $("#报表tabs").tabs({
+                    onSelect: function () {
+                        var tab = $('#报表tabs').tabs('getSelected');
+                        var index = $('#报表tabs').tabs('getTabIndex', tab);
+                        if (index == 1) {
+                            $('#报表tabs').tabs('update', {
+                                tab: tab,
+                                options: {
+                                    href: '/Report/TableTotal/?report=@ViewBag.report'
+                                }
+                            });
+                        } else if (index == 0) {
+                            $('#报表tabs').tabs('update', {
+                                tab: tab,
+                                options: {
+                                    href: '/Report/PageTotal/?report=@ViewBag.report' 
+                                }
+                            });
+                        }
+                    }
+                });  //end of tabs
+
+            }).keydown(function (e) {
+                if (e.keyCode == 13 && e.ctrlKey) {
+                    $("#window").window('open');
+                }
+            });;
+
+        function formatPrice(val, row) {
+            if (val.indexOf('.') > 0) {
+                return parseFloat(val).toFixed(2);
+            } else {
+                return val;
+            }
+        }
+
+        function filterdata(data) {
+            return JSON.stringify(data);
+
+        }
+
+        function clearform(formid) {
+            //$("#" + formid).find("input[name='report']").val($("#report").val());
+            $("#" + formid).form('reset');
+        }
+        </script>
+    </div>
+ 
+</body>
+</html>

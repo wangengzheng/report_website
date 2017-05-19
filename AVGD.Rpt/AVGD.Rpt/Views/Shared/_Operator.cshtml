@@ -1,0 +1,11 @@
+﻿@{
+    Layout = null;
+    string[] Operator = new string[] { "等于","大于","大于等于","包含","小于","小于等于"};
+    string[] Operatorvalue = new string[] { "=", ">", ">=", "", "<", "<=" };
+}
+<select class="easyui-combobox" name="@(ViewBag.selectname)selectname"  data-options="panelHeight:'auto',editable:false">
+  @for (int index = 0; index < Operator.Length; index++)
+  {
+      <option value="@Operatorvalue[index]">@Operator[index]</option>
+  }
+</select> 

@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>管理后台</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="~/Source/V1/images/favicon.png" />
+    <link href="~/Source/V1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Source/V1/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Source/V1/css/Site.css" rel="stylesheet" />
+    <link href="~/Source/V1/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/V1/css/theme.css" rel="stylesheet" />
+    <script src="~/Source/V1/scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/Source/V1/scripts/jquery.easyui-1.4.3.min.js"></script>
+    <script src="~/Source/V1/scripts/easyui-lang-zh_CN.js"></script>
+</head>
+<body style="overflow-x: hidden;">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <ul class="nav pull-right">
+                </ul>
+                <img class="first" src="~/Source/V1/images/edslogo.png" style="height: 41px;">
+                <span class="second" style="color: #FFFFFF">统计</span>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="sidebar-nav">
+                    <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu">
+                          <i class="icon-dashboard"></i>订单信息报表<span class="label label-info">+3</span></div>
+                    <ul id="dashboard-menu" class="nav nav-list collapse in">
+                        <li><a href="/Admin/Home/index?report=f78b6fbb3e658f4b43c7b346ccde7ffb&id=1&title=EDS商城订单" >EDS商城订单</a></li>   
+                        <li ><a href="/Admin/Home/index?report=0c5514ece70c4ed00ed55f330beaacda&id=1&title=易掌管订单">易掌管订单</a></li>
+                        <li><a href="/Admin/Home/index?report=1391a11cb0600ffae861019e28989bb3&id=1&title=店小二订单">店小二订单</a></li>
+                        <li><a href="/Admin/Home/index?report=895d194aa7c42d65df007bbf4ef395ba&id=1&title=E淘订单">E淘订单</a></li>
+                    </ul>
+                    <div class="nav-header" data-toggle="collapse" data-target="#Commodity-menu">
+                        <i class="icon-dashboard"></i>商品信息报表<span class="label label-info">+3</span></div>
+                    <ul id="Commodity-menu" class="nav nav-list collapse in">
+                           <li><a href="/Admin/Home/index?report=d90f78bbb57366adfbd51bd7071920d7&id=2&title=商品信息报表" >商品信息报表</a></li>   
+                        <li ><a href="/Admin/Home/index?report=ac3c2fecaafa7d98c493f7680795214c&id=2&title=品牌信息报表">品牌信息报表</a></li>
+                        <li><a href="/Admin/Home/index?report=1274220b683b5fadc899e3aa9057822c&id=2&title=商品类型、材质、风格统计报表">商品类型、材质、风格统计报表</a></li>
+                    </ul>
+                    <div class="nav-header" data-toggle="collapse" data-target="#settings-menu">
+                    <i class="icon-dashboard"></i>供货商信息报表<span class="label label-info">+1</span></div>
+                    <ul id="settings-menu" class="nav nav-list collapse in">
+                          <li><a href="/Admin/Home/index?report=2b063a6635fc708e0057b59f27456cdb&id=3&title=供货商信息报表">供货商信息报表</a></li>                        
+                          <li><a href="/Admin/Home/index?report=62f0116dc628f111ab9ddd6637ee38df&id=10&title=E淘认证报表">E淘认证报表</a></li>
+                    </ul>
+                   <div class="nav-header" data-toggle="collapse" data-target="#Supplier-menu">
+                    <i class="icon-dashboard"></i>服务运营商信息报表<span class="label label-info">+1</span></div>
+                    <ul id="Supplier-menu" class="nav nav-list collapse in">
+                          <li><a href="/Admin/Home/index?report=74e2ae57e7fffb7e3bd998dde424f0df&id=4&title=服务运营商报表">服务运营商报表</a></li>  
+                    </ul>
+                       <div class="nav-header" data-toggle="collapse" data-target="#Finance-menu">
+                    <i class="icon-dashboard"></i>财务部报表<span class="label label-info">+1</span></div>
+                    <ul id="Finance-menu" class="nav nav-list collapse in">
+                          <li><a href="/Admin/Home/index?report=9cdf80752eaf6522058cf0389ca9b3ed&id=5&title=财务部统计报表">财务部统计报表</a></li>
+                        <li><a href="/Admin/Home/index?report=c7ad753b47671228bc28f1e75397bf9d&id=5&title=E淘财务部统计报表">E淘财务部统计报表</a></li>
+                    </ul>
+                       <div class="nav-header" data-toggle="collapse" data-target="#Sales-menu">
+                    <i class="icon-dashboard"></i>销售部报表<span class="label label-info">+1</span></div>
+                    <ul id="Sales-menu" class="nav nav-list collapse in">
+                          <li><a >客服部统计报表</a></li>
+                    </ul>   
+                         <div class="nav-header" data-toggle="collapse" data-target="#Market-menu">
+                    <i class="icon-dashboard"></i>市场部报表<span class="label label-info">+1</span></div>
+                    <ul id="Market-menu" class="nav nav-list collapse in">
+                          <li><a >市场部统计报表</a></li>
+                    </ul>
+                         <div class="nav-header" data-toggle="collapse" data-target="#Operate-menu">
+                    <i class="icon-dashboard"></i>运营管理信息报表<span class="label label-info">+2</span></div>
+                    <ul  class="nav nav-list collapse in">
+                          <li><a >服务运营商统计报表</a></li>
+                           <li><a >品牌统计报表</a></li>
+                    </ul>
+                      <div class="nav-header" data-toggle="collapse" data-target="#Operate-menu">
+                    <i class="icon-dashboard"></i>账号信息的报表<span class="label label-info">+2</span></div>
+                    <ul class="nav nav-list collapse in">
+                          <li><a   href="/Admin/Home/index?report=a087aecd9b44a1c13e0102bb008641ed&id=9&title=EDS商城账号信息报表">EDS商城账号信息报表报表</a></li>
+                           <li><a href="/Admin/Home/index?report=f2849b823726fbae4863595d60e6f3ee&id=9&title=店小二账号信息报表">店小二账号信息报表报表</a></li>
+                    </ul>
+                      <div class="nav-header" data-toggle="collapse" data-target="#Newreport-menu">
+                        <i class="icon-dashboard"></i>设置<span class="label label-info">+2</span></div>
+                    <ul id="Newreport-menu" class="nav nav-list collapse in">                   
+                           <li> <a href="/Admin/Home/allcategory">所有类别</a></li>      
+                           <li><a href="/Admin/Home/allreport" >所有报表</a></li>                                     
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="faq-content">
+                     @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>    
+    <footer style="text-align: center;">
+	<div style="font-family: 微软雅黑, arial, verdana, sans-serif; font-size: 12px; font-weight: bolder;">
+           Copyright 	© www.edsmall.cn EDS会员商城 粤ICP备14009360号
+        </div>
+		</footer>
+    <script src="~/Source/V1/scripts/bootstrap.min.js"></script>    
+</body>
+</html>

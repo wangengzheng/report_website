@@ -1,0 +1,274 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutView.cshtml";
+}
+<h2>所有报表设置</h2>
+<table  id="allreportgirdview" class="easyui-datagrid" title="(所有报表)结构" style="width:auto;height:auto" data-options="singleSelect:true,collapsible:false,method:'get',autoRowHeight:'false',fitColumns:'true',rownumbers:'true',url:'/Admin/Home/getAllReportJson',toolbar:'#allreporttb'">
+        <thead>
+            <tr>
+                 <th data-options="field:'Id'">主键</th>
+                 <th data-options="field:'Cateoryid'">报表类别</th>
+                <th data-options="field:'Detailedname'">
+                    报表名称    
+                </th>
+                <th data-options="field:'Sqlvalue',width:160">
+                    报表sql值
+                </th>              
+                <th data-options="field:'Total'">
+                    统计字段
+                </th>
+                 <th data-options="field:'Sort'">
+                    排序字段
+                </th>
+                 <th data-options="field:'Order'">
+                    排序方式
+                </th>              
+            </tr>
+        </thead>
+    </table>
+
+
+
+    <div id="allreporttb" style="padding: 2px 5px;">
+        <a href="#"  class="easyui-linkbutton" iconcls="icon-edit" plain="true"  id="btn_allreportedit">编辑</a>
+        &nbsp;&nbsp;
+         <a href="#"  class="easyui-linkbutton" iconcls="icon-add" plain="true"  id="btn_allreportadd">新增</a>
+         &nbsp;&nbsp;
+         <a href="#"  class="easyui-linkbutton" iconcls="icon-remove" plain="true"  id="btn_allreportremove">删除</a>
+    </div>
+
+    <div id="allreportwindow" class="easyui-window" title="新增报表" style="width: auto; height: auto"
+        data-options="iconCls:'icon-save',modal:true,closed:true">
+        <div style="padding: 10px 60px 20px 60px">
+            <form action="" method="post" id="allreportform">
+            <table cellpadding="8">                
+                <tr>
+                    <td>
+                        报表名称:
+                    </td>
+                    <td>
+                        <input class="easyui-textbox" type="text" name="报表名称" id="reportname"  value=""/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        报表sql语句:
+                    </td>
+                    <td>
+                    <textarea name="报表sql值" style="width:400px;height:200px;white-space: pre-wrap;" id="reportsqlvalue">         
+                      </textarea>
+                    </td>
+                </tr>
+                <tr > @* id="categorytr" style="display: none"*@
+                <td>
+                报表类别:
+                </td>
+                <td>                  
+               @Html.Action("getCategoryDropDownList")    @*name=报表类别 id=categoryId*@    
+              @*<input class="easyui-textbox" type="text" name="报表类别" id="categoryId"  value=""/>*@   <a href="/Admin/Home/allcategory">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新增报表类别</a>
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                        统计字段:
+                    </td>
+                    <td> 
+                        <input class="easyui-textbox" type="text" name="统计字段"  value=""  id="reporttotal">&nbsp;<b style="padding-left: 14px;color: red;">以逗号分隔,字段必须是数字类型</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        排序字段:
+                    </td>
+                    <td>           
+                             <input class="easyui-textbox" type="text" name="排序字段"  value="" id="reportsort"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        排序方式:
+                    </td>
+                    <td>
+                        <select id="reportsorttype" name="排序方式"  class="easyui-combobox" data-options="panelHeight:'auto',editable:false" >
+                            @if (ViewBag.排序方式 == "desc")
+                            {
+                                <option name="desc" selected="selected">desc</option>
+                                <option name="asc">asc</option>
+                            }
+                            else
+                            { 
+                                <option name="desc">desc</option>
+                                <option name="asc" selected="selected">asc</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>                        
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="" name="report"  id="report"/>
+                    </td>
+                </tr>
+            </table>
+            <div style="text-align: center; padding: 5px">
+             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok"  id="NewreportAdd" onclick="submitForm('allreportgirdview','allreportwindow','allreportform')">
+                    确定</a>&nbsp;&nbsp; <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-back"
+                        onclick="breakout('allreportwindow')">退出</a>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(function () {
+
+            //点击新增报表
+            $("#btn_allreportadd").bind('click', function () {
+                setvalue(); setEnable();
+                // $("#categorytr").show();
+                $("#allreportwindow").window({
+                    title: "新增报表"
+                });
+                $("form[id='allreportform']").attr("action", "Newreport");
+                $("#allreportwindow").window('open');
+            });
+
+            //点击删除报表
+            $("#btn_allreportremove").bind('click', function () {
+                setDisable();
+                //$("#categorytr").hide();
+                $("#allreportwindow").window({
+                    title: "删除报表"
+                });
+                $("form[id='allreportform']").attr("action", "Removereport");
+                var rowremove = $("#allreportgirdview").datagrid('getSelected');
+                if (rowremove) {
+                    $("#allreportwindow").window('open');
+
+                    $("#allreportform").form('load', {
+                        '报表名称': rowremove.Detailedname,
+                        '报表sql值': rowremove.Sqlvalue,
+                        //'报表类别': rowremove.报表类别,
+                        '统计字段': rowremove.Total,
+                        '排序字段': rowremove.Sort,
+                        '排序方式': rowremove.Order,
+                        'report': rowremove.Id
+                    });
+                    //$('#cc').combobox('setValues', '001');
+                    $.each($("#categoryId option"), function (index, data) {
+                        if ($(data).text() == rowremove.报表类别) {
+                            $('#categoryId').combobox('setValues', $(data).val());
+                        }
+                    });
+
+                    $("#allreportgirdview").datagrid('clearSelections');
+                } else {
+                    $.messager.alert('提示', '请至少选中一行数据!');
+                }
+
+            });
+            //点击编辑报表
+            $("#btn_allreportedit").bind('click', function () {
+                setEnable();
+                //$("#reportname").textbox('readonly',true)
+                // $("#categorytr").hide();
+                $("#allreportwindow").window({
+                    title: "编辑报表"
+                });
+                $("form[id='allreportform']").attr("action", "Editreport");
+                var rowedit = $("#allreportgirdview").datagrid('getSelected');
+                if (rowedit) {
+                    $("#allreportwindow").window('open');
+                    $("#allreportform").form('load', {
+                        '报表名称': rowedit.Detailedname,
+                        '报表sql值': rowedit.Sqlvalue,
+                        //  '报表类别': rowedit.报表类别,
+                        '统计字段': rowedit.Total,
+                        '排序字段': rowedit.Sort,
+                        '排序方式': rowedit.Order,
+                        'report': rowedit.Id
+                    });
+                    //  $("#categoryId").combobox('setValue', rowedit.报表类别);
+                    $.each($("#categoryId option"), function (index, data) {
+                        if ($(data).text() == rowedit.报表类别) {
+                            $('#categoryId').combobox('setValues', $(data).val());
+                        }
+                    });
+                    $("#allreportgirdview").datagrid('clearSelections');
+                } else {
+                    $.messager.alert('提示', '请至少选中一行数据!');
+                }
+
+            });
+            /*
+            //保存新增报表内容
+            $("#NewreportAdd").bind('click', function () {
+            $.ajax({
+            type: "POST",
+            url: '/Admin/Home/Newreport',
+            data: $("#Newreportform").serialize(),
+            cache: false,
+            success: function (data) {
+            if (data == "ok") {
+            $("#Newreportwindow").window('close');
+            } else if (data == "错误!") {
+            $.messager.alert('温馨提示', '出错了请联系管理员', 'warning');
+            }
+            },
+            error: function (data) {
+            alert('出错了请联系管理员!');
+            }
+            });
+            });
+            */
+
+
+        });
+
+        //提交
+        function submitForm(datagirdviewid, windowid, formid) {
+            $.ajax({
+                type: "POST",
+                url: '/Admin/Home/' + $("#" + formid).attr("action"),
+                data: $("#" + formid).serialize(),
+                cache: false,
+                success: function (data) {
+                    if (data == "ok") {
+                        $("#" + windowid).window('close');
+                        $("#" + datagirdviewid).datagrid('reload');
+                    } else if (data == "错误!") {
+                        $.messager.alert('温馨提示', '出错了请联系管理员', 'warning');
+                    }
+                },
+                error: function (data) {
+                    alert('出错了请联系管理员!');
+                }
+            });
+        } //end of 提交
+
+        function breakout(name) {
+            $("#" + name).window('close');
+        }
+        /*reportname    reportsqlvalue  reporttotal   reportsort  reportsorttype*/
+        function setvalue() {
+            $("#reportname").textbox('setValue', '');
+            $("#reportsqlvalue").val('');
+            $("#reporttotal").textbox('setValue', '');
+            $("#categoryId").textbox('setValue', '');           
+            $("#reportsort").textbox('setValue', '');            
+        }
+        function setDisable() {
+            $("#reportname").textbox('readonly', true);
+            $("#reportsqlvalue").attr('readonly', true);
+            $("#categoryId").attr('readonly', true);           
+            $("#reporttotal").textbox('readonly', true);
+            $("#reportsort").textbox('readonly', true);
+        }
+        function setEnable() {
+            $("#reportname").textbox('readonly', false);
+            $("#reportsqlvalue").attr('readonly', false);
+            $("#categoryId").textbox('readonly', false);
+            $("#reporttotal").textbox('readonly', false);
+            $("#reportsort").textbox('readonly', false);
+        }
+    </script>

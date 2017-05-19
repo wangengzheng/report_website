@@ -1,0 +1,158 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <title>EDS 报表</title>        
+    <link rel="shortcut icon" href="~/Source/V1/images/favicon.png" /> 
+    <link href="~/Source/V1/themes/default/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Source/V1/css/Site.css" rel="stylesheet" />
+    <link href="~/Source/V1/themes/icon.css" rel="stylesheet" type="text/css" />
+    <script src="~/Source/V1/scripts/jquery-1.11.3.min.js"></script>   
+    <script src="~/Source/V1/scripts/jquery.easyui-1.4.3.min.js"></script>
+    <script src="~/Source/V1/scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Source/V1/scripts/G_Index.js"></script>
+</head>
+<body style="overflow: scroll;margin:0px 10px 5px 10px">
+    <div>
+        <div style="padding-top: 15px;">
+            <p>
+                <span></span>
+            </p>
+        </div>
+        <div id="SQLSearch">
+            <form action="/Admin/God/Index"  method="post" id="SQLSearchForm">
+              <textarea name="sqlValue" class="easyui-textbox"  data-options="multiline:true, prompt: '输入查询的 SQL 语句, Ctrl + Enter 进行搜索 ！',icons:[{
+                iconCls:'icon-search'@*,
+                handler: function(e){
+                   var v= $(e.data.target).textbox('getValue');                  
+                   submitForm(v);
+                }*@
+            }]"  style="width:100%;height:100px;white-space: pre-wrap;">@ViewBag.sqlValue</textarea>
+                @Html.AntiForgeryToken()
+                </form>   
+            </div>
+          <div id="toolbar" style="float: right">      
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:'true'"  onclick="save()">导出</a> 
+        </div>
+                <p style="clear:both;"></p>
+        <table  id="datagirdview" class="easyui-datagrid" title="数据显示" style="width:auto;height:660px;" data-options="singleSelect:true,method:'post',fitColumns:'true',pageNumber:1,pageSize:20,pageList:[10,20,30,40,50],rownumbers:'true',pagination:'true',autoRowHeight:'false',sortName:'@ViewBag.排序字段',sortOrder:'@ViewBag.排序方式',remoteSort:'true'">
+            <thead>
+                <tr>
+                    @if (ViewBag.ColumnName != null)
+                    {
+                        string[] columns = (string[])(ViewBag.ColumnName);
+                        foreach (string column in columns)
+                        {
+                        <th data-options="field:'@column',width:80" sortable="true" sortname="@column">@column
+                        </th>        
+                        }
+                    }
+                </tr>
+            </thead>
+        </table>
+        <p>
+        </p>
+    </div>
+@* <script>
+    // $(function () {
+    //     var $formTextarea = $("#SQLSearch textarea:first");
+    //     var $formSqlValue=$("input[name='sqlValue']");
+    //     $("#SQLSearch .textbox-addon").attr('style', 'right:0px; background-color: #EAE8E8; padding: 1px;white-space:wrap;');
+
+    //     $("#SQLSearch .textbox-addon a").attr('style', 'width: 76px; height: 98px;');
+
+    //     $("#SQLSearch .icon-search").on('click', function () {
+    //         submitForm($formSqlValue.val());
+    //     });
+         
+    //     $formTextarea.keydown(function (e) {
+    //         if (e.keyCode == 13 && e.ctrlKey) {
+    //             submitForm($formSqlValue.val());
+    //         }
+    //     });
+
+    //     setInterval(function () { $formTextarea.focus(); }, 1000);
+
+    //     var dataGirdViewIsFirstLoading = true;
+    //     $("#datagirdview").datagrid({
+    //         url: '/Admin/God/getJsonFromReport',
+    //         onLoadSuccess: function (data) {                 
+    //             if (data.total == 0) {
+    //                 $.messager.alert('提示', '没有找到符合条件的数据', 'question');
+    //             }
+    //         },
+    //         rowStyler: function (index, row) {
+    //             if (index % 2 == 0) {
+    //                 return 'background-color:#E0ECFF;'
+    //             }
+    //         }           
+    //     });
+
+    //    function submitForm(sqlValue)
+    //     {
+    //         var isTrue = false;
+    //         var option = {
+    //             url: '/Admin/God/CheckSQLSuccess',
+    //             data: {
+    //                 sqlValue: sqlValue,
+    //                 __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
+    //             },
+    //             type: 'POST',
+    //             async:false,
+    //             success: function (data) {
+    //                 if (data.toLowerCase() != 'true') {
+    //                     console.info('error');
+    //                     $.messager.alert('提示', '请输入正确的 SQL 语句');
+    //                 } else {
+    //                     isTrue = true;
+    //                 }
+    //             },
+    //             error: function (data) {
+    //                 console.error('error');
+    //                 $.messager.alert('提示', '请输入正确的 SQL 语句');
+    //             }
+    //         };
+    //         $.ajax(option);
+    //         if (isTrue) {
+    //             $("#SQLSearchForm").submit();
+    //         } 
+    //     }
+    //});
+
+    // //导出数据
+    // var saveIsLoading = false;
+    // function save() {
+    //     if (saveIsLoading) return;
+    //     saveIsLoading = true;
+    //     setTimeout(function () { saveIsLoading = false; }, 1500);
+    //     var value = $("#report").val();
+    //     if (value != "") {
+    //         var grid = $('#datagirdview').datagrid('options');
+    //         var datas = { report: value, sort: grid.sortName, order: grid.sortOrder, title: "自定义", total: "", limitvalue: "", __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val() };
+    //         $.ajax({
+    //             url: '/Export/DownLoad',
+    //             cache: false,
+    //             type: 'POST',
+    //             data: datas,
+    //             success: function (data) {
+    //                 window.location.href = data;
+    //             },
+    //             error: function (data) {
+    //                 $.messager.alert('温馨提示', '数据出错请联系管理员!   ', 'question');
+    //             }
+    //         });
+    //     }
+    //     else {
+    //         $.messager.alert('提示', '出错了请联系管理员!', 'question');
+    //     }
+    // }
+
+ </script>*@
+</body>
+</html>

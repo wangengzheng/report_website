@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null;
+}
+@using AVGD.Rpt.ViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>审核图片</title>
+    <meta name="description" content="A javascript library for viewing images in a fully full screen.">
+    <link href="~/Source/V1/css/styles.css" rel="stylesheet" />
+    <script src="~/Source/V1/scripts/intense.min.js"></script>
+</head>
+<body style="background-color:#ECECEA;">
+
+    <header>
+@*        <div class="logo">E</div>*@
+        <div class="main">
+            <h1 style="border-radius: 50%;width:8%;">E淘认证信息</h1>
+            <h1 style="width:22%;">点击图片查看详细</h1>
+        </div>
+    </header>
+    <section class="demos">
+        @if (Model != null)
+        {
+            ETaoPhoto model = (ETaoPhoto)Model;
+            string path="http://oss.av-gd.com";
+            if (model.F_idCard.IsNotEmpty())
+            {               
+            <img src="@(path)@(model.F_idCard)" class="demo-image" data-title="身份证正面" alt="身份证正面" data-caption="@(model.name ) @(model.phone) 的 身份证正面 " />
+            }
+              if (model.F_idCard.IsNotEmpty())
+            { 
+            <img src="@(path)@(model.B_idCard)" class="demo-image" data-title="身份证背面" alt="身份证背面" data-caption="@(model.name ) @(model.phone) 的 身份证背面 " />
+            }
+              if (model.F_idCard.IsNotEmpty())
+            { 
+            <img src="@(path)@(model.License)" class="demo-image" data-title="营业执照" alt="营业执照" data-caption="@(model.name ) @(model.phone) 的 营业执照 " />
+            }
+            <br />
+              if (model.F_idCard.IsNotEmpty())
+            { 
+            <img src="@(path)@(model.Store_1)" class="demo-image" data-title="店铺照片1" alt="店铺照片1" data-caption="@(model.name ) @(model.phone) 的 店铺照片1 " />
+            }
+              if (model.F_idCard.IsNotEmpty())
+            { 
+            <img src="@(path)@(model.Store_2)" class="demo-image" data-title="店铺照片2" alt="店铺照片2" data-caption="@(model.name ) @(model.phone) 的 店铺照片2 " />
+            }
+              if (model.F_idCard.IsNotEmpty())
+            { 
+            <img src="@(path)@(model.Store_3)" class="demo-image" data-title="店铺照片3"  alt="店铺照片3" data-caption="@(model.name ) @(model.phone) 的 店铺照片3 " />
+            }
+        }
+        else
+        {
+            <span>没上传图片</span>
+        }
+    </section>
+@*    <a class="github-link" href="https://github.com/tholman/intense-images" target="_blank">
+        <img src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    </a>*@
+
+    <script>
+        var elements = document.querySelectorAll('.demo-image');
+        Intense(elements);
+		</script>
+
+</body>
+</html>
