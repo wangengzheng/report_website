@@ -1079,6 +1079,7 @@ namespace AVGD.Rpt.Controllers
         {
             SessionHelper.RestSqlValue();
             SessionHelper.RestTotalName();
+            return Redirect("/admin/god/index");
             return View();
         }
 

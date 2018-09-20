@@ -89,15 +89,18 @@ namespace AVGD.Rpt.Areas.Admin.Controllers
                 if (pagelist.sort.IsNotEmpty())
                 {
                     if (pagelist.order.IsEmpty()) pagelist.order = "asc";
-                    if (pagelist.sql.Contains("order by"))
+                    if (pagelist.sql.Contains("order by",StringComparison.OrdinalIgnoreCase))
                     {
-                        pagelist.sql = pagelist.sql.Substring(0, pagelist.sql.IndexOf("order by"));
+                        pagelist.sql = pagelist.sql.Substring(0, pagelist.sql.IndexOf("order by",StringComparison.OrdinalIgnoreCase));
                     }
-                    sql = string.Format(" {0}  order by  {1}  {2}  limit {3},{4}", pagelist.sql, pagelist.sort, pagelist.order, ((pagelist.page - 1) * pagelist.rows).ToString(), pagelist.rows.ToString());
+                    sql = pagelist.sql + " order by " + pagelist.sort + " " + pagelist.order +  " OFFSET " + ((pagelist.page - 1) * pagelist.rows).ToString() + " ROWS  FETCH NEXT " + pagelist.rows.ToString() + " ROWS ONLY";
+                    //sql = string.Format(" {0}  order by  {1}  {2}  limit {3},{4}", pagelist.sql, pagelist.sort, pagelist.order, ((pagelist.page - 1) * pagelist.rows).ToString(), pagelist.rows.ToString());
                 }
                 else
                 {
-                    sql = pagelist.sql + " limit  " + ((pagelist.page - 1) * pagelist.rows).ToString() + "," + pagelist.rows.ToString();
+
+                    //sql = pagelist.sql + " limit  " + ((pagelist.page - 1) * pagelist.rows).ToString() + "," + pagelist.rows.ToString();
+                    sql = pagelist.sql + " OFFSET " + ((pagelist.page - 1) * pagelist.rows).ToString() + " ROWS  FETCH NEXT "+ pagelist.rows.ToString() + " ROWS ONLY";
                 }
                 pagelist.limitvalue = sql;
                 Session["LimitSqlValue"] = sql;

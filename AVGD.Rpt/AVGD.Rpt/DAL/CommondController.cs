@@ -68,7 +68,7 @@ namespace AVGD.Rpt.DAL
                 var fromIndex = sqlValue.IndexOf("from", StringComparison.OrdinalIgnoreCase);
                 var resutlSql = "select  '' " + sqlValue.Substring(fromIndex);
                 //修改 select '' 空内容 来优化 sql
-                var count = _db.Database.SqlQuery<int>(string.Format("select count(*) from ( {0} ) a", optimization ? resutlSql : sqlValue)).FirstOrDefault();
+                var count = _db.Database.SqlQuery<int>(string.Format("select count(*) from ( {0} ) a", false ? resutlSql : sqlValue)).FirstOrDefault();
                 Cookies.Set("Count_" + cookieKey, count.ToString(), DateTime.Now.AddMinutes((double)15));
                 return count;
             }
@@ -313,7 +313,8 @@ namespace AVGD.Rpt.DAL
         /// <returns></returns>
         public DataTable GetDataTableOneRow(string sqlValue)
         {
-            return GetDataTable(string.Format("({0}) limit 1",sqlValue));
+            //return GetDataTable(string.Format("({0}) limit 1",sqlValue));
+            return GetDataTable(string.Format("select top 1 * from ({0}) as a", sqlValue));
             //return GetDataTable(string.Format("select * from ( {0} ) a limit 0,1", sqlValue));
         }
         #endregion
@@ -328,7 +329,8 @@ namespace AVGD.Rpt.DAL
         {
             using (DbReport context = new DbReport())
             {
-                return context.Database.SqlQuery<int>(string.Format("select count(*) from ({0} limit 1 )a", sqlValue)).FirstOrDefault();                
+                //return context.Database.SqlQuery<int>(string.Format("select count(*) from ({0} limit 1 )a", sqlValue)).FirstOrDefault();                
+                return context.Database.SqlQuery<int>(string.Format("select count(*) from (select top 1 * from ({0}) as b) as a", sqlValue)).FirstOrDefault();
             }
         
         }
